@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Course Management System</h1>
+            <p>Manage your courses with ease</p>
+        </header>
+
+        <!-- Add Course Form -->
+        <section class="form-section">
+            <h2>Add New Course</h2>
+            <form id="courseForm">
+                <div class="form-group">
+                    <label for="title">Course Title *</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="instructor">Instructor *</label>
+                    <input type="text" id="instructor" name="instructor" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="duration">Duration (hours) *</label>
+                    <input type="number" id="duration" name="duration" min="1" required>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Add Course</button>
+                    <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Courses List -->
+        <section class="courses-section">
+            <div class="section-header">
+                <h2>All Courses</h2>
+                <button class="btn btn-refresh" id="refreshBtn">Refresh</button>
+            </div>
+            <div id="coursesList" class="courses-grid"></div>
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <p>No courses available. Add your first course!</p>
+            </div>
+        </section>
+
+        <!-- Edit Modal -->
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Edit Course</h2>
+                <form id="editForm">
+                    <input type="hidden" id="editId">
+                    
+                    <div class="form-group">
+                        <label for="editTitle">Course Title *</label>
+                        <input type="text" id="editTitle" name="title" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editDescription">Description</label>
+                        <textarea id="editDescription" name="description" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editInstructor">Instructor *</label>
+                        <input type="text" id="editInstructor" name="instructor" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editDuration">Duration (hours) *</label>
+                        <input type="number" id="editDuration" name="duration" min="1" required>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Update Course</button>
+                        <button type="button" class="btn btn-secondary modal-close">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
