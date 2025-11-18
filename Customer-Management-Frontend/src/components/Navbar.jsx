@@ -1,0 +1,43 @@
+import React from "react";
+
+export default function Navbar({ toggleSidebar }) {
+  return (
+    <nav className="navbar navbar-expand-lg navbar-dark bg-primary sticky-top shadow-sm">
+      <div className="container-fluid">
+        <button
+          className="btn btn-outline-light d-md-none me-2"
+          onClick={toggleSidebar}
+        >
+          <i className="bi bi-list"></i>
+        </button>
+
+        <a className="navbar-brand fw-bold" href="/">
+          CustomerManager
+        </a>
+
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav ms-auto">
+            <li className="nav-item">
+              <a className="nav-link active" href="/">Dashboard</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/customers">Customers</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/reports">Reports</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  );
+}
