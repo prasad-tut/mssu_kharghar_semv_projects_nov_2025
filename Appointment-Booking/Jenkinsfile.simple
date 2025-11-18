@@ -1,0 +1,80 @@
+// Simplified Jenkins Pipeline for Elastic Beanstalk Deployment
+// Use this if you're deploying to Elastic Beanstalk instead of ECS
+
+pipeline {
+    agent any
+    
+    tools {
+        maven 'Maven-3.9'
+        jdk 'JDK-21'
+    }
+    
+    environment {
+        APP_NAME = 'appointment-management'
+        EB_APP_NAME = 'appointment-management'
+        EB_ENV_NAME = 'appointment-env'
+        AWS_REGION = 'us-east-1'
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Checking out code...'
+                checkout scm
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                echo 'Building application...'
+                sh 'mvn clean package -DskipTests'
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    junit '**/target/surefire-reports/*.xml'
+                }
+            }
+        }
+        
+        stage('Deploy to Elastic Beanstalk') {
+            steps {
+                echo 'Deploying to AWS Elastic Beanstalk...'
+                script {
+                    withAWS(credentials: 'aws-credentials', region: "${AWS_REGION}") {
+                        sh """
+                            # Create application version
+                            aws elasticbeanstalk create-application-version \
+                                --application-name ${EB_APP_NAME} \
+                                --version-label ${BUILD_NUMBER} \
+                                --source-bundle S3Bucket="elasticbeanstalk-${AWS_REGION}-${AWS_ACCOUNT_ID}",S3Key="${APP_NAME}/${BUILD_NUMBER}.jar" \
+                                --region ${AWS_REGION}
+                            
+                            # Update environment
+                            aws elasticbeanstalk update-environment \
+                                --application-name ${EB_APP_NAME} \
+                                --environment-name ${EB_ENV_NAME} \
+                                --version-label ${BUILD_NUMBER} \
+                                --region ${AWS_REGION}
+                        """
+                    }
+                }
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Deployment successful!'
+        }
+        failure {
+            echo 'Deployment failed!'
+        }
+    }
+}

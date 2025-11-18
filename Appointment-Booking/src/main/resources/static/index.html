@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Appointment Management System</h1>
+        </header>
+
+        <div class="main-content">
+            <!-- Add/Edit Form -->
+            <div class="form-section">
+                <h2 id="form-title">Add New Appointment</h2>
+                <form id="appointment-form">
+                    <input type="hidden" id="appointmentId">
+                    
+                    <div class="form-group">
+                        <label for="clientId">Client ID:</label>
+                        <input type="number" id="clientId" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="providerId">Provider ID:</label>
+                        <input type="number" id="providerId" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="serviceId">Service ID:</label>
+                        <input type="number" id="serviceId" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="appointmentDate">Date:</label>
+                        <input type="date" id="appointmentDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="appointmentTime">Time:</label>
+                        <input type="time" id="appointmentTime" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">Status:</label>
+                        <select id="status" required>
+                            <option value="">Select Status</option>
+                            <option value="Scheduled">Scheduled</option>
+                            <option value="Confirmed">Confirmed</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                    </div>
+
+                    <div class="form-buttons">
+                        <button type="submit" class="btn btn-primary" id="submit-btn">Add Appointment</button>
+                        <button type="button" class="btn btn-secondary" id="cancel-btn" style="display: none;">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Appointments List -->
+            <div class="list-section">
+                <div class="list-header">
+                    <h2>Appointments</h2>
+                    <button class="btn btn-refresh" onclick="loadAppointments()">🔄 Refresh</button>
+                </div>
+                <div id="appointments-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
