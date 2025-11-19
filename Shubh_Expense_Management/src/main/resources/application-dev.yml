@@ -1,0 +1,15 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/expensedb
+    username: postgres
+    password: password
+
+logging:
+  level:
+    com.expense: DEBUG
+    org.springframework.security: DEBUG

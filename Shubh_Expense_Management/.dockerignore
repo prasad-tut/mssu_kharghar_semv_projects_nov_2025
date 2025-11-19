@@ -1,0 +1,43 @@
+# Git
+.git
+.gitignore
+
+# Maven
+target/
+!target/expense-management-system-1.0.0.jar
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Environment files
+.env
+.env.*
+
+# Documentation
+*.md
+!README.md
+
+# Scripts
+*.sh
+*.ps1
+
+# Frontend
+frontend/
+
+# Kiro
+.kiro/
+
+# Uploads
+uploads/
