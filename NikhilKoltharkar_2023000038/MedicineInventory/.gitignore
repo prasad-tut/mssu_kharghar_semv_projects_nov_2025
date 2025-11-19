@@ -1,0 +1,40 @@
+# Compiled class files
+*.class
+
+# Package files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Virtual machine crash logs
+hs_err_pid*
+
+# IDE specific files
+.vscode/
+.idea/
+*.iml
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Jenkins folder (not part of project)
+jenkins.war
+.jenkins/
+
+# Database credentials (security)
+# Note: Remember to update DatabaseConnection.java before pushing
+
+# Do NOT ignore library JARs - we need these!
+!lib/*.jar

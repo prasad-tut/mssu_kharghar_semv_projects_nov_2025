@@ -1,0 +1,715 @@
+================================================================================
+                  MEDICINE INVENTORY MANAGEMENT SYSTEM
+                        CLOUD COMPUTING PROJECT
+================================================================================
+
+STUDENT DETAILS:
+----------------
+Name: Nikhil Koltharkar
+Roll Number: 2023000038
+Institution: MSSU Kharghar
+Course: Cloud Computing - Semester V
+Project Type: Cloud Computing Project
+Submission Date: November 2025
+
+================================================================================
+PROJECT OVERVIEW:
+================================================================================
+
+This is a full-stack web application for managing medicine inventory in a 
+pharmacy. It provides complete CRUD (Create, Read, Update, Delete) operations 
+with a modern, responsive web interface and Jenkins CI/CD integration for 
+automated builds.
+
+FEATURES:
+---------
+1. Add New Medicine - Add medicines with complete details to inventory
+2. View All Medicines - Display complete inventory in table format
+3. Update Medicine - Edit existing medicine information
+4. Delete Medicine - Remove medicines from inventory with confirmation
+5. Search Medicine - Search medicines by name with partial matching
+6. Real-time Notifications - Success/error toast messages for all operations
+7. Responsive Design - Mobile-friendly interface that works on all devices
+8. Jenkins CI/CD - Automated build system for continuous integration
+
+================================================================================
+TECHNOLOGY STACK:
+================================================================================
+
+BACKEND:
+--------
+- Language: Java 17
+- Server: Java's Built-in HTTP Server (com.sun.net.httpserver.HttpServer)
+- Database Connectivity: JDBC (Java Database Connectivity)
+- JSON Processing: Gson Library 2.10.1
+- Architecture: REST API (RESTful Web Services)
+- Port: 8081
+
+FRONTEND:
+---------
+- HTML5 - Semantic structure and markup
+- CSS3 - Modern styling with gradients, flexbox, animations
+- JavaScript (ES6+) - Fetch API, async/await, DOM manipulation
+- Design: Purple gradient theme with responsive layout
+
+DATABASE:
+---------
+- MySQL 8.0
+- Database Name: medicine_inventory
+- Table: medicines (with 7 columns)
+
+CI/CD:
+------
+- Jenkins 2.528.2
+- Automated compilation and build verification
+- Build history tracking
+- Console output logging
+- Port: 8080
+
+VERSION CONTROL:
+----------------
+- Git for version control
+- GitHub repository hosting
+- .gitignore for excluding unnecessary files
+
+LIBRARIES USED:
+---------------
+1. mysql-connector-j-9.5.0.jar - MySQL database driver for JDBC connectivity
+2. gson-2.10.1.jar - Google's JSON library for data serialization
+
+================================================================================
+DATABASE SCHEMA:
+================================================================================
+
+Table: medicines
+----------------
+Column Name      | Data Type      | Constraints                | Description
+-----------------|----------------|----------------------------|---------------------------
+medicine_id      | INT            | PRIMARY KEY, AUTO_INCREMENT| Unique identifier
+medicine_name    | VARCHAR(100)   | NOT NULL                   | Name of medicine
+manufacturer     | VARCHAR(100)   | NOT NULL                   | Manufacturing company
+quantity         | INT            | NOT NULL                   | Stock quantity
+price            | DECIMAL(10,2)  | NOT NULL                   | Price per unit (in USD)
+expiry_date      | DATE           | NOT NULL                   | Expiration date
+category         | VARCHAR(50)    | NOT NULL                   | Medicine category
+
+Available Categories:
+- Pain Relief
+- Antibiotic
+- Supplement
+- Vitamin
+- Antacid
+- Antiseptic
+- Other
+
+Sample Data Included:
+- Paracetamol (Pain Relief)
+- Amoxicillin (Antibiotic)
+- Vitamin C (Supplement)
+
+================================================================================
+PROJECT STRUCTURE:
+================================================================================
+
+MedicineInventory/
+│
+├── lib/                                    (External Libraries)
+│   ├── mysql-connector-j-9.5.0.jar        - MySQL JDBC Driver
+│   └── gson-2.10.1.jar                    - JSON Processing Library
+│
+├── src/                                    (Java Source Files)
+│   ├── DatabaseConnection.java             - Database connection management
+│   ├── Medicine.java                       - Medicine model class (POJO)
+│   ├── MedicineDAO.java                    - Data Access Object (CRUD methods)
+│   ├── Main.java                           - Console interface (alternative)
+│   └── RestAPIServer.java                  - REST API server implementation
+│
+├── frontend/                               (Web Interface)
+│   ├── index.html                          - HTML structure and layout
+│   ├── style.css                           - CSS styling and animations
+│   └── script.js                           - JavaScript logic and API calls
+│
+├── database_setup.sql                      - Database creation script
+├── README.md                               - Quick start guide
+├── JENKINS_SETUP_GUIDE.md                  - Jenkins CI/CD setup guide
+├── PROJECT_DOCUMENTATION.txt               - This file (complete documentation)
+└── .gitignore                              - Git ignore configuration
+
+================================================================================
+KEY FILES EXPLAINED:
+================================================================================
+
+DatabaseConnection.java:
+- Manages MySQL database connection
+- Uses JDBC to establish connection
+- Provides getConnection() method
+- Connection details: localhost:3306/medicine_inventory
+
+Medicine.java:
+- Plain Old Java Object (POJO) / Model class
+- Represents a medicine entity with all properties
+- Contains two constructors (with and without ID)
+- Includes getters, setters, and toString() method
+
+MedicineDAO.java:
+- Data Access Object pattern implementation
+- Contains all CRUD operations:
+  * addMedicine() - INSERT operation
+  * getAllMedicines() - SELECT all operation
+  * getMedicineById() - SELECT by ID operation
+  * updateMedicine() - UPDATE operation
+  * deleteMedicine() - DELETE operation
+  * searchMedicineByName() - SEARCH operation
+- Uses PreparedStatement to prevent SQL injection
+
+RestAPIServer.java:
+- Creates HTTP server on port 8081
+- Defines REST API endpoints for all operations
+- Handles HTTP requests (GET, POST, PUT, DELETE)
+- Serves static files (HTML, CSS, JS) from frontend folder
+- Uses Gson for JSON serialization/deserialization
+- Implements CORS headers for cross-origin requests
+
+Main.java:
+- Console-based menu-driven interface (alternative to web)
+- Uses Scanner for user input
+- Directly calls MedicineDAO methods
+- Useful for testing without web interface
+
+index.html:
+- Main web page structure
+- Contains form for adding/updating medicines
+- Table for displaying medicine inventory
+- Search functionality
+- Uses semantic HTML5 elements
+
+style.css:
+- Modern purple gradient theme
+- Responsive design with flexbox and grid
+- Smooth animations and transitions
+- Toast notification styling
+- Mobile-friendly media queries
+
+script.js:
+- Fetch API calls to REST endpoints
+- DOM manipulation and event handling
+- Form validation and submission
+- Dynamic table population
+- Toast notification system
+- Search functionality implementation
+
+================================================================================
+INSTALLATION & SETUP:
+================================================================================
+
+PREREQUISITES:
+--------------
+1. Java JDK 8 or higher installed
+   - Check: java -version and javac -version
+   - Download: https://adoptium.net/
+
+2. MySQL Server 8.0 installed and running
+   - Check: mysql --version
+   - Download: https://dev.mysql.com/downloads/mysql/
+
+3. Git (for cloning repository)
+   - Check: git --version
+   - Download: https://git-scm.com/
+
+4. Web Browser (Chrome, Firefox, Edge, Safari)
+
+5. Jenkins (optional, for CI/CD)
+   - Download jenkins.war from: https://www.jenkins.io/download/
+
+STEP-BY-STEP INSTALLATION:
+---------------------------
+
+STEP 1: Clone Repository
+git clone https://github.com/prasad-tut/mssu_kharghar_semv_projects_nov_2025.git
+cd mssu_kharghar_semv_projects_nov_2025/NikhilKoltharkar_2023000038/MedicineInventory
+
+STEP 2: Database Setup
+- Open MySQL Workbench
+- Connect to local MySQL server
+- Execute database_setup.sql file
+- Verify: SELECT * FROM medicines; (should show 3 sample records)
+
+STEP 3: Configure Database Credentials
+- Open src/DatabaseConnection.java
+- Update line 8: private static final String PASSWORD = "your_mysql_password";
+- Save file
+
+STEP 4: Compile Project
+Windows: javac -cp ".;lib/*" src/*.java
+Mac/Linux: javac -cp ".:lib/*" src/*.java
+
+STEP 5: Run Application
+Windows: java -cp ".;lib/*;src" RestAPIServer
+Mac/Linux: java -cp ".:lib/*:src" RestAPIServer
+
+STEP 6: Access Application
+Open browser: http://localhost:8081
+
+================================================================================
+REST API ENDPOINTS:
+================================================================================
+
+Base URL: http://localhost:8081/api
+
+1. GET /api/medicines
+   Description: Retrieve all medicines from inventory
+   Method: GET
+   Response: JSON array of medicine objects
+   Example Response:
+   [
+     {
+       "medicineId": 1,
+       "medicineName": "Paracetamol",
+       "manufacturer": "PharmaCorp",
+       "quantity": 500,
+       "price": 5.50,
+       "expiryDate": "2025-12-31",
+       "category": "Pain Relief"
+     }
+   ]
+
+2. POST /api/medicine/add
+   Description: Add new medicine to inventory
+   Method: POST
+   Content-Type: application/json
+   Request Body:
+   {
+     "medicineName": "Aspirin",
+     "manufacturer": "Bayer",
+     "quantity": 300,
+     "price": 12.50,
+     "expiryDate": "2026-09-15",
+     "category": "Pain Relief"
+   }
+   Response:
+   {
+     "success": true,
+     "message": "Medicine added successfully!"
+   }
+
+3. PUT /api/medicine/update
+   Description: Update existing medicine details
+   Method: PUT
+   Content-Type: application/json
+   Request Body:
+   {
+     "medicineId": 1,
+     "medicineName": "Paracetamol",
+     "manufacturer": "PharmaCorp",
+     "quantity": 750,
+     "price": 6.00,
+     "expiryDate": "2025-12-31",
+     "category": "Pain Relief"
+   }
+   Response:
+   {
+     "success": true,
+     "message": "Medicine updated successfully!"
+   }
+
+4. DELETE /api/medicine/delete?id={medicineId}
+   Description: Delete medicine from inventory
+   Method: DELETE
+   Parameters: id (medicine ID)
+   Example: /api/medicine/delete?id=1
+   Response:
+   {
+     "success": true,
+     "message": "Medicine deleted successfully!"
+   }
+
+5. GET /api/medicine/search?name={searchTerm}
+   Description: Search medicines by name
+   Method: GET
+   Parameters: name (search term)
+   Example: /api/medicine/search?name=Para
+   Response: JSON array of matching medicines
+
+================================================================================
+JENKINS CI/CD INTEGRATION:
+================================================================================
+
+WHAT IS JENKINS:
+Jenkins is a Continuous Integration/Continuous Deployment (CI/CD) tool that 
+automates the build and testing process.
+
+JENKINS SETUP:
+1. Download jenkins.war from https://www.jenkins.io/download/
+2. Run: java -jar jenkins.war
+3. Access: http://localhost:8080
+4. Complete initial setup (install plugins, create admin user)
+
+CREATING BUILD JOB:
+1. Click "New Item" in Jenkins
+2. Name: MedicineInventorySystem
+3. Type: Freestyle Project
+4. Build Step: Execute Windows batch command
+5. Command:
+   cd /d "PROJECT_PATH\MedicineInventory"
+   if exist src\*.class del src\*.class
+   javac -cp ".;lib/*" src/*.java
+
+RUNNING BUILDS:
+1. Click "Build Now" in Jenkins dashboard
+2. View build status (green = success, red = failure)
+3. Click build number → "Console Output" for detailed logs
+
+BENEFITS:
+- Automated compilation
+- Immediate error detection
+- Build history tracking
+- Professional CI/CD practice
+
+NOTE: Jenkins runs on port 8080, application runs on port 8081
+
+For detailed Jenkins setup, see JENKINS_SETUP_GUIDE.md
+
+================================================================================
+USAGE GUIDE:
+================================================================================
+
+ADDING MEDICINE:
+1. Fill all fields in "Add New Medicine" form
+2. Click "Add Medicine" button
+3. Green success notification appears
+4. Medicine automatically added to table
+
+VIEWING MEDICINES:
+1. All medicines display automatically on page load
+2. Table shows: ID, Name, Manufacturer, Quantity, Price, Expiry, Category
+3. Action buttons (Edit, Delete) available for each medicine
+
+SEARCHING MEDICINES:
+1. Type medicine name in search box (partial names work)
+2. Click "Search" button
+3. Table filters to show matching results
+4. Click "Show All" to display all medicines again
+
+UPDATING MEDICINE:
+1. Click "Edit" button on desired medicine
+2. Form populates with current medicine data
+3. Modify any fields as needed
+4. Click "Update Medicine" button
+5. Changes saved and table refreshes automatically
+
+DELETING MEDICINE:
+1. Click "Delete" button on desired medicine
+2. Confirm deletion in popup dialog
+3. Medicine removed from database
+4. Table updates automatically
+
+NOTIFICATIONS:
+- Green toast notification = Success
+- Red toast notification = Error
+- Appears at bottom-right corner
+- Auto-disappears after 3 seconds
+
+================================================================================
+TESTING PERFORMED:
+================================================================================
+
+FUNCTIONAL TESTING:
+✓ Add Medicine - Successfully adds medicines with all details
+✓ View All Medicines - Displays all inventory correctly
+✓ Search Medicine - Finds medicines by name (partial matching works)
+✓ Update Medicine - Modifies medicine details accurately
+✓ Delete Medicine - Removes medicines with confirmation
+✓ Form Validation - Prevents empty submissions
+✓ Database Operations - All CRUD operations work correctly
+
+INTEGRATION TESTING:
+✓ Frontend-Backend Communication - API calls work properly
+✓ Database Connectivity - JDBC connection stable
+✓ JSON Serialization - Data converts correctly between Java and JSON
+✓ File Serving - Static files (HTML/CSS/JS) load correctly
+
+UI/UX TESTING:
+✓ Responsive Design - Works on desktop, tablet, mobile
+✓ Toast Notifications - Success/error messages display correctly
+✓ Form Auto-fill - Edit function populates form properly
+✓ Table Display - Data renders correctly in table format
+✓ Search Functionality - Filters results in real-time
+
+JENKINS TESTING:
+✓ Build Compilation - Code compiles without errors
+✓ Build Status - Green checkmark on successful build
+✓ Build History - Tracks multiple builds
+✓ Console Output - Detailed logs available
+
+ERROR HANDLING:
+✓ Invalid Data - Proper validation and error messages
+✓ Database Errors - Catches and displays connection errors
+✓ Missing Files - Handles file not found scenarios
+✓ Port Conflicts - Clear error messages for port issues
+
+================================================================================
+LEARNING OUTCOMES:
+================================================================================
+
+TECHNICAL SKILLS ACQUIRED:
+
+1. Java Programming:
+   - Object-Oriented Programming (OOP) concepts
+   - Exception handling and error management
+   - File I/O operations
+   - HTTP server implementation
+   - JSON processing with Gson
+
+2. Database Management:
+   - MySQL database design and normalization
+   - SQL queries (CREATE, INSERT, SELECT, UPDATE, DELETE)
+   - JDBC connectivity and PreparedStatements
+   - Database schema design
+   - Data integrity and constraints
+
+3. Web Development:
+   - HTML5 semantic elements
+   - CSS3 modern features (gradients, flexbox, animations)
+   - JavaScript ES6+ (async/await, arrow functions, fetch API)
+   - DOM manipulation and event handling
+   - Responsive web design principles
+
+4. REST API Development:
+   - RESTful architecture principles
+   - HTTP methods and status codes
+   - JSON data format
+   - API endpoint design
+   - Client-server communication
+
+5. Software Architecture:
+   - MVC (Model-View-Controller) pattern
+   - DAO (Data Access Object) pattern
+   - Separation of concerns
+   - Code organization and structure
+
+6. DevOps & CI/CD:
+   - Jenkins installation and configuration
+   - Automated build processes
+   - Continuous Integration concepts
+   - Build automation and testing
+
+7. Version Control:
+   - Git basics (clone, commit, push)
+   - GitHub repository management
+   - .gitignore configuration
+   - Collaborative development practices
+
+SOFT SKILLS DEVELOPED:
+- Problem-solving and debugging
+- Documentation writing
+- Project planning and organization
+- Time management
+- Self-learning and research
+
+================================================================================
+CHALLENGES FACED & SOLUTIONS:
+================================================================================
+
+CHALLENGE 1: Port Conflict (8080)
+Problem: Jenkins and application both wanted to use port 8080
+Solution: Changed application to port 8081, documented clearly
+
+CHALLENGE 2: CORS Issues
+Problem: Browser blocked API requests from different origin
+Solution: Added CORS headers in RestAPIServer.java
+
+CHALLENGE 3: Database Password Security
+Problem: Hardcoded password in source code
+Solution: Used placeholder, added instructions in README
+
+CHALLENGE 4: Compiled .class Files
+Problem: Binary files being tracked in Git
+Solution: Created .gitignore to exclude .class files
+
+CHALLENGE 5: Jenkins Understanding
+Problem: Confusion about what Jenkins does vs application
+Solution: Created separate detailed documentation (JENKINS_SETUP_GUIDE.md)
+
+CHALLENGE 6: Frontend-Backend Connection
+Problem: API URL hardcoded caused issues
+Solution: Made URL configurable and documented port clearly
+
+================================================================================
+SYSTEM REQUIREMENTS:
+================================================================================
+
+MINIMUM REQUIREMENTS:
+- Operating System: Windows 7+, macOS 10.14+, Linux (Ubuntu 18.04+)
+- Processor: Intel Core i3 or equivalent
+- RAM: 4 GB
+- Storage: 500 MB free space
+- Java: JDK 8+
+- MySQL: 5.7+
+- Browser: Chrome 90+, Firefox 88+, Edge 90+
+
+RECOMMENDED REQUIREMENTS:
+- Operating System: Windows 10+, macOS 11+, Linux (Ubuntu 20.04+)
+- Processor: Intel Core i5 or equivalent
+- RAM: 8 GB
+- Storage: 1 GB free space
+- Java: JDK 17
+- MySQL: 8.0+
+- Browser: Latest version of Chrome, Firefox, or Edge
+
+================================================================================
+TROUBLESHOOTING:
+================================================================================
+
+ISSUE 1: "javac is not recognized"
+Cause: Java not installed or not in system PATH
+Solution:
+- Install JDK from https://adoptium.net/
+- Add Java bin folder to system PATH environment variable
+- Restart Command Prompt/Terminal
+
+ISSUE 2: "MySQL JDBC Driver not found"
+Cause: mysql-connector-j-9.5.0.jar missing or incorrect classpath
+Solution:
+- Verify JAR file exists in lib/ folder
+- Check compile command uses correct path separator:
+  Windows: semicolon (;) → javac -cp ".;lib/*"
+  Mac/Linux: colon (:) → javac -cp ".:lib/*"
+
+ISSUE 3: "Connection failed" or "Access denied for user"
+Cause: Incorrect database credentials or MySQL server not running
+Solution:
+- Open src/DatabaseConnection.java
+- Update PASSWORD on line 8 with correct MySQL password
+- Verify MySQL server is running
+- Test: mysql -u root -p
+
+ISSUE 4: "Port 8081 already in use"
+Cause: Another application using port 8081
+Solution:
+- Find and stop application using port 8081
+- OR change port in RestAPIServer.java line 19:
+  HttpServer server = HttpServer.create(new InetSocketAddress(8082), 0);
+- Update frontend/script.js API_URL to match new port
+
+ISSUE 5: "Database 'medicine_inventory' doesn't exist"
+Cause: Database not created
+Solution:
+- Open MySQL Workbench
+- Execute database_setup.sql file
+- Verify: SHOW DATABASES; should list medicine_inventory
+
+ISSUE 6: "404 - File Not Found" in browser
+Cause: Frontend files not found or server not serving them
+Solution:
+- Verify frontend/ folder contains all 3 files
+- Restart RestAPIServer
+- Check project path in RestAPIServer.java
+- Clear browser cache (Ctrl + F5)
+
+ISSUE 7: Jenkins won't start
+Cause: Port 8080 in use, Java not found, or insufficient permissions
+Solution:
+- Close other applications using port 8080
+- Verify Java: java -version
+- Run Command Prompt as Administrator
+- OR use different port: java -jar jenkins.war --httpPort=9090
+
+ISSUE 8: Jenkins shows "Connection refused"
+Cause: Jenkins server is not running
+Solution:
+- Jenkins is a server that must be actively running
+- Start Jenkins: java -jar jenkins.war
+- Keep Command Prompt window open
+- Jenkins stops when you close the window
+
+ISSUE 9: Build fails in Jenkins (red ball)
+Cause: Compilation errors, wrong project path, or missing files
+Solution:
+- Click build number → "Console Output" for detailed error
+- Check project path in Jenkins build command
+- Verify all source files exist
+- Manually try: javac -cp ".;lib/*" src/*.java
+
+ISSUE 10: Buttons don't work in web interface
+Cause: JavaScript errors or API not responding
+Solution:
+- Open browser console (Press F12)
+- Check for JavaScript errors
+- Verify server is running (check terminal)
+- Refresh page (F5)
+- Check API_URL in script.js matches server port
+
+================================================================================
+CONCLUSION:
+================================================================================
+
+This Medicine Inventory Management System successfully demonstrates a complete 
+full-stack web application with proper architectural patterns, modern design 
+principles, and professional CI/CD integration. The project showcases 
+proficiency in:
+
+- Backend development with Java and REST APIs
+- Database design and management with MySQL
+- Frontend web technologies (HTML/CSS/JavaScript)
+- CI/CD automation with Jenkins
+- Version control with Git/GitHub
+- Professional documentation practices
+
+The system provides a practical solution for pharmacy inventory management 
+while demonstrating industry-standard software development practices. The 
+integration of Jenkins CI/CD particularly highlights modern DevOps 
+methodologies, making this not just a functional application but also a 
+showcase of contemporary software engineering practices.
+
+The modular architecture and clear separation of concerns make the system 
+easily maintainable and extensible for future enhancements. The comprehensive 
+documentation ensures that the project can be understood, deployed, and 
+maintained by other developers.
+
+This project represents a solid foundation in full-stack development and can 
+serve as a portfolio piece demonstrating technical competency across multiple 
+areas of software engineering.
+
+================================================================================
+REFERENCES & RESOURCES:
+================================================================================
+
+DOCUMENTATION:
+- Java Documentation: https://docs.oracle.com/en/java/
+- MySQL Documentation: https://dev.mysql.com/doc/
+- Gson Documentation: https://github.com/google/gson
+- Jenkins Documentation: https://www.jenkins.io/doc/
+- MDN Web Docs: https://developer.mozilla.org/
+
+TOOLS:
+- Java JDK: https://adoptium.net/
+- MySQL: https://dev.mysql.com/downloads/mysql/
+- Jenkins: https://www.jenkins.io/download/
+- Git: https://git-scm.com/
+- VS Code: https://code.visualstudio.com/
+
+LEARNING RESOURCES:
+- Java Tutorials: https://docs.oracle.com/javase/tutorial/
+- MySQL Tutorial: https://www.mysqltutorial.org/
+- REST API Design: https://restfulapi.net/
+- JavaScript ES6: https://www.w3schools.com/js/
+- Jenkins Tutorial: https://www.jenkins.io/doc/tutorials/
+
+================================================================================
+ACKNOWLEDGMENTS:
+================================================================================
+
+This project was completed as part of the Cloud Computing course requirements 
+at MSSU Kharghar. Special thanks to the course instructor for guidance and 
+feedback throughout the development process.
+
+Technologies and libraries used are the property of their respective owners 
+and are used in accordance with their licenses.
+
+================================================================================
+                              END OF DOCUMENTATION
+================================================================================
+
+Last Updated: November 2025
+Version: 1.0
+Status: Complete and Ready for Submission
