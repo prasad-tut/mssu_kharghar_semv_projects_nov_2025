@@ -187,7 +187,7 @@ $env:JAVA_HOME = "C:\java\jdk-21.0.1+12"
 $env:Path = "C:\maven\bin;$env:Path"
 
 # Navigate to project directory
-cd C:\Users\vijay\Desktop\Bug_tacker
+cd C:\Users\username\Desktop\Bug_tacker
 
 # Run the application
 mvn spring-boot:run
@@ -196,7 +196,7 @@ mvn spring-boot:run
 ### Option 3: Build and Run as JAR
 
 ```bash
-cd C:\Users\vijay\Desktop\Bug_tacker
+cd C:\Users\username\Desktop\Bug_tacker
 mvn clean package -DskipTests
 java -jar target/bug-tracker-1.0.0.jar
 ```
@@ -204,7 +204,7 @@ java -jar target/bug-tracker-1.0.0.jar
 ### Option 4: Using Docker Compose
 
 ```bash
-cd C:\Users\vijay\Desktop\Bug_tacker
+cd C:\Users\username\Desktop\Bug_tacker
 docker-compose up -d
 ```
 
