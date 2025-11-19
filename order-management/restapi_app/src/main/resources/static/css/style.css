@@ -1,0 +1,260 @@
+:root {
+	--sidebar-bg: #111b27;
+	--sidebar-active: #1f2d3d;
+	--accent: #3ba55d;
+	--danger: #d9534f;
+	--text-dark: #1e1e1e;
+	--text-light: #f4f4f4;
+	--panel-bg: #ffffff;
+	--panel-border: #e2e8f0;
+	--muted: #6c7a89;
+	--shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	font-family: "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont,
+		sans-serif;
+	color: var(--text-dark);
+	background: #f5f7fb;
+}
+
+.app {
+	display: flex;
+	min-height: 100vh;
+}
+
+.sidebar {
+	width: 260px;
+	background: var(--sidebar-bg);
+	color: var(--text-light);
+	padding: 32px 24px;
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.sidebar h1 {
+	margin: 0;
+	font-size: 1.5rem;
+}
+
+.sidebar ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.sidebar li {
+	padding: 12px 16px;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: background 0.2s ease;
+}
+
+.sidebar li:hover {
+	background: rgba(255, 255, 255, 0.08);
+}
+
+.sidebar li.active {
+	background: var(--sidebar-active);
+}
+
+.content {
+	flex: 1;
+	padding: 32px;
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.panel {
+	background: var(--panel-bg);
+	padding: 24px;
+	border-radius: 16px;
+	border: 1px solid var(--panel-border);
+	box-shadow: var(--shadow);
+	display: none;
+}
+
+.panel.visible {
+	display: block;
+}
+
+.panel header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.panel h2 {
+	margin: 0 0 12px 0;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	margin-bottom: 16px;
+}
+
+label {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	font-weight: 500;
+	color: var(--muted);
+}
+
+input,
+textarea,
+select {
+	padding: 10px 12px;
+	border: 1px solid #cdd5df;
+	border-radius: 8px;
+	font: inherit;
+}
+
+textarea {
+	min-height: 90px;
+	resize: vertical;
+}
+
+button {
+	align-self: flex-start;
+	padding: 10px 18px;
+	border-radius: 999px;
+	border: none;
+	background: var(--accent);
+	color: white;
+	font-weight: 600;
+	cursor: pointer;
+	transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+button:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 8px 16px rgba(59, 165, 93, 0.3);
+}
+
+button.danger {
+	background: var(--danger);
+}
+
+.grid-form {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+	gap: 16px;
+}
+
+.grid-form button {
+	grid-column: 1 / -1;
+}
+
+.table-wrapper {
+	overflow-x: auto;
+	border: 1px solid var(--panel-border);
+	border-radius: 12px;
+}
+
+.table-wrapper.empty {
+	padding: 24px;
+	text-align: center;
+	color: var(--muted);
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+th,
+td {
+	padding: 12px 16px;
+	text-align: left;
+	border-bottom: 1px solid var(--panel-border);
+	font-size: 0.95rem;
+}
+
+th {
+	background: #f8fafc;
+	font-weight: 600;
+	text-transform: uppercase;
+	font-size: 0.8rem;
+	color: #94a3b8;
+}
+
+.result {
+	padding: 12px 16px;
+	border-radius: 12px;
+	background: #f8fafc;
+	border: 1px solid #e2e8f0;
+	min-height: 44px;
+}
+
+.toast {
+	display: inline-block;
+	padding: 10px 14px;
+	border-radius: 999px;
+	font-weight: 600;
+}
+
+.toast.success {
+	background: rgba(59, 165, 93, 0.15);
+	color: #256d3f;
+}
+
+.toast.error {
+	background: rgba(217, 83, 79, 0.15);
+	color: #8b2b28;
+}
+
+.card {
+	padding: 16px;
+	border-radius: 12px;
+	border: 1px solid var(--panel-border);
+	background: white;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+	gap: 12px;
+}
+
+.card strong {
+	display: block;
+	font-size: 0.8rem;
+	text-transform: uppercase;
+	color: #94a3b8;
+	margin-bottom: 4px;
+}
+
+@media (max-width: 960px) {
+	.app {
+		flex-direction: column;
+	}
+	.sidebar {
+		width: 100%;
+		flex-direction: row;
+		align-items: center;
+		gap: 16px;
+		overflow-x: auto;
+	}
+	.sidebar nav ul {
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
+	.sidebar li {
+		flex: 1 1 auto;
+		text-align: center;
+	}
+}
+
