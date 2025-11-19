@@ -1,0 +1,114 @@
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+*.iml
+
+# Build
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.rar
+
+# Maven
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.maven.metadata.xml
+.mvn/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Environment Variables & Secrets (NEVER COMMIT)
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+.env.test
+.env.*.example
+!.env.example
+secrets/
+*.pem
+*.key
+*.pfx
+*.p12
+
+# Logs
+logs/
+*.log
+*.log.*
+npm-debug.log*
+
+# Database
+*.sql.backup
+*.db
+*.sqlite
+*.sqlite3
+*.sql.zip
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.swp
+*~
+
+# Dependencies
+node_modules/
+bower_components/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.swap
+
+# IDE specific
+.classpath
+.project
+.settings/
+.factorypath
+*.sublime-project
+*.sublime-workspace
+
+# Docker
+docker-compose.override.yml
+
+# Gradle
+.gradle/
+build/
+gradle/
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# System
+.env.local.php

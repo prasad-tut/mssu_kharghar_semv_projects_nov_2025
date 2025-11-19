@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Bugs - Bug Tracker System</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="/styles.css" rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="/" th:href="@{/}">
+                <i class="fas fa-bug"></i> Bug Tracker
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bugs" th:href="@{/bugs}">
+                            <i class="fas fa-list"></i> All Bugs
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/raise-bug" th:href="@{/raise-bug}">
+                            <i class="fas fa-plus-circle"></i> Raise Bug
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="py-4">
+        <div class="container-fluid">
+            <!-- Flash Messages -->
+            <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle"></i>
+                <span th:text="${success}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            
+            <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fas fa-exclamation-circle"></i>
+                <span th:text="${error}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+
+            <!-- Sticky Statistics Section (Always on Top) -->
+            <div class="sticky-top bg-white shadow-sm rounded-3" style="top: 0; z-index: 999; padding: 1.5rem 2rem; margin-bottom: 2rem; border-bottom: 2px solid #e9ecef;">
+                <div class="row text-center">
+                    <div class="col-md-3">
+                        <h5 class="text-danger mb-0">
+                            <i class="fas fa-circle-notch"></i>
+                        </h5>
+                        <small class="text-muted">Total Bugs</small>
+                        <h6 th:text="${totalBugs}" style="font-size: 1.8rem; font-weight: bold; color: #dc3545;"></h6>
+                    </div>
+                    <div class="col-md-3">
+                        <h5 class="text-warning mb-0">
+                            <i class="fas fa-spinner"></i>
+                        </h5>
+                        <small class="text-muted">Open</small>
+                        <h6 th:text="${openBugs}" style="font-size: 1.8rem; font-weight: bold; color: #ffc107;"></h6>
+                    </div>
+                    <div class="col-md-3">
+                        <h5 class="text-info mb-0">
+                            <i class="fas fa-cog"></i>
+                        </h5>
+                        <small class="text-muted">In Progress</small>
+                        <h6 th:text="${progressBugs}" style="font-size: 1.8rem; font-weight: bold; color: #0dcaf0;"></h6>
+                    </div>
+                    <div class="col-md-3">
+                        <h5 class="text-success mb-0">
+                            <i class="fas fa-check-circle"></i>
+                        </h5>
+                        <small class="text-muted">Fixed</small>
+                        <h6 th:text="${fixedBugsCount}" style="font-size: 1.8rem; font-weight: bold; color: #198754;"></h6>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Report Section at Top -->
+            <div class="row mb-4 px-2">
+                <div class="col-12">
+                    <div class="card shadow-lg border-0 bg-light">
+                        <div class="card-header bg-success text-white py-3">
+                            <h5 class="mb-0">
+                                <i class="fas fa-plus-circle"></i> Quick Report New Bug
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-muted mb-3">Found a bug? Report it immediately!</p>
+                            <a href="/raise-bug" class="btn btn-success btn-lg fw-bold" th:href="@{/raise-bug}">
+                                <i class="fas fa-plus-circle"></i> Report New Bug Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row px-2">
+                <div class="col-12">
+                    <div class="card shadow-lg border-0">
+                        <div class="card-header bg-primary text-white py-4">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h2 class="mb-0">
+                                        <i class="fas fa-list"></i> Bug Reports (Latest First)
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-0">
+                            <div th:if="${activeBugs.size() > 0}" class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th class="ps-4">ID</th>
+                                            <th>Description</th>
+                                            <th>Priority</th>
+                                            <th>Severity</th>
+                                            <th>Detected On</th>
+                                            <th>Assigned To</th>
+                                            <th>Status</th>
+                                            <th class="text-center pe-4">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="bug : ${activeBugs}">
+                                            <td class="ps-4">
+                                                <span class="badge bg-secondary" th:text="'#' + ${bug.id}"></span>
+                                            </td>
+                                            <td>
+                                                <span th:title="${bug.description}" 
+                                                      th:text="${#strings.abbreviate(bug.description, 50)}"></span>
+                                            </td>
+                                            <td>
+                                                <span th:if="${bug.priority == 'HIGH'}" 
+                                                      class="badge bg-danger">🔴 HIGH</span>
+                                                <span th:if="${bug.priority == 'MEDIUM'}" 
+                                                      class="badge bg-warning text-dark">🟡 MEDIUM</span>
+                                                <span th:if="${bug.priority == 'LOW'}" 
+                                                      class="badge bg-success">🟢 LOW</span>
+                                            </td>
+                                            <td>
+                                                <span th:if="${bug.severity == 'CRITICAL'}" 
+                                                      class="badge bg-danger">⚡ CRITICAL</span>
+                                                <span th:if="${bug.severity == 'MARGINAL'}" 
+                                                      class="badge bg-warning text-dark">⚠️ MARGINAL</span>
+                                                <span th:if="${bug.severity == 'NEGLIGIBLE'}" 
+                                                      class="badge bg-info">✓ NEGLIGIBLE</span>
+                                            </td>
+                                            <td>
+                                                <small th:text="${bug.detectedOn}"></small>
+                                            </td>
+                                            <td>
+                                                <span th:if="${bug.assignedTo != null and bug.assignedTo != ''}" 
+                                                      th:text="'👤 ' + ${bug.assignedTo}"></span>
+                                                <span th:if="${bug.assignedTo == null or bug.assignedTo == ''}" 
+                                                      class="text-muted">Unassigned</span>
+                                            </td>
+                                            <td>
+                                                <span th:if="${bug.status == 'OPEN'}" 
+                                                      class="badge bg-danger">OPEN</span>
+                                                <span th:if="${bug.status == 'IN_PROGRESS'}" 
+                                                      class="badge bg-warning text-dark">IN PROGRESS</span>
+                                                <span th:if="${bug.status == 'FIXED'}" 
+                                                      class="badge bg-success">FIXED</span>
+                                            </td>
+                                            <td class="text-center pe-4">
+                                                <a th:href="@{/update-bug/{id}(id=${bug.id})}" 
+                                                   class="btn btn-sm btn-primary fw-bold">
+                                                    <i class="fas fa-edit"></i> Update
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- No Bugs Message -->
+                            <div th:if="${activeBugs.size() == 0}" class="text-center py-5">
+                                <i class="fas fa-inbox" style="font-size: 3rem; color: #ccc;"></i>
+                                <h4 class="mt-3 text-muted">No Active Bug Reports</h4>
+                                <p class="text-muted mb-3">All bugs have been fixed!</p>
+                                <a href="/raise-bug" class="btn btn-primary fw-bold" th:href="@{/raise-bug}">
+                                    <i class="fas fa-plus-circle"></i> Report Bug
+                                </a>
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fixed Bugs Section -->
+            <div class="row px-2 mt-5">
+                <div class="col-12">
+                    <div class="card shadow-lg border-0">
+                        <div class="card-header bg-success text-white py-4">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h2 class="mb-0">
+                                        <i class="fas fa-check-circle"></i> Resolved Bugs (Fixed)
+                                    </h2>
+                                </div>
+                                <div class="col-auto">
+                                    <span class="badge bg-light text-success fs-6" th:text="'Total: ' + ${fixedBugsCount}"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-0">
+                            <div th:if="${fixedBugs.size() > 0}" class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th class="ps-4">ID</th>
+                                            <th>Description</th>
+                                            <th>Priority</th>
+                                            <th>Severity</th>
+                                            <th>Detected On</th>
+                                            <th>Assigned To</th>
+                                            <th>Status</th>
+                                            <th class="text-center pe-4">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="bug : ${fixedBugs}" style="opacity: 0.85;">
+                                            <td class="ps-4">
+                                                <span class="badge bg-success" th:text="'#' + ${bug.id}"></span>
+                                            </td>
+                                            <td>
+                                                <span th:title="${bug.description}" 
+                                                      th:text="${#strings.abbreviate(bug.description, 50)}" style="text-decoration: line-through; color: #6c757d;"></span>
+                                            </td>
+                                            <td>
+                                                <span th:if="${bug.priority == 'HIGH'}" 
+                                                      class="badge bg-danger">🔴 HIGH</span>
+                                                <span th:if="${bug.priority == 'MEDIUM'}" 
+                                                      class="badge bg-warning text-dark">🟡 MEDIUM</span>
+                                                <span th:if="${bug.priority == 'LOW'}" 
+                                                      class="badge bg-success">🟢 LOW</span>
+                                            </td>
+                                            <td>
+                                                <span th:if="${bug.severity == 'CRITICAL'}" 
+                                                      class="badge bg-danger">⚡ CRITICAL</span>
+                                                <span th:if="${bug.severity == 'MARGINAL'}" 
+                                                      class="badge bg-warning text-dark">⚠️ MARGINAL</span>
+                                                <span th:if="${bug.severity == 'NEGLIGIBLE'}" 
+                                                      class="badge bg-info">✓ NEGLIGIBLE</span>
+                                            </td>
+                                            <td>
+                                                <small th:text="${bug.detectedOn}"></small>
+                                            </td>
+                                            <td>
+                                                <span th:if="${bug.assignedTo != null and bug.assignedTo != ''}" 
+                                                      th:text="'👤 ' + ${bug.assignedTo}"></span>
+                                                <span th:if="${bug.assignedTo == null or bug.assignedTo == ''}" 
+                                                      class="text-muted">Unassigned</span>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-success">✓ FIXED</span>
+                                            </td>
+                                            <td class="text-center pe-4">
+                                                <a th:href="@{/update-bug/{id}(id=${bug.id})}" 
+                                                   class="btn btn-sm btn-outline-success fw-bold">
+                                                    <i class="fas fa-eye"></i> View
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- No Fixed Bugs Message -->
+                            <div th:if="${fixedBugs.size() == 0}" class="text-center py-5">
+                                <i class="fas fa-folder-open" style="font-size: 3rem; color: #ccc;"></i>
+                                <h4 class="mt-3 text-muted">No Fixed Bugs Yet</h4>
+                                <p class="text-muted mb-3">Keep fixing bugs! They will appear here.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2025 Bug Tracker System. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

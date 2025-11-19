@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raise Bug - Bug Tracker System</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="/styles.css" rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="/" th:href="@{/}">
+                <i class="fas fa-bug"></i> Bug Tracker
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bugs" th:href="@{/bugs}">
+                            <i class="fas fa-list"></i> All Bugs
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/raise-bug" th:href="@{/raise-bug}">
+                            <i class="fas fa-plus-circle"></i> Raise Bug
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="py-4">
+        <div class="container">
+            <!-- Flash Messages -->
+            <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle"></i>
+                <span th:text="${success}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            
+            <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fas fa-exclamation-circle"></i>
+                <span th:text="${error}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card shadow-lg border-0">
+                        <div class="card-header bg-primary text-white py-4">
+                            <h2 class="mb-0">
+                                <i class="fas fa-plus-circle"></i> Report a New Bug
+                            </h2>
+                        </div>
+                        <div class="card-body p-4">
+                            <form action="/raise-bug" method="POST" id="bugForm" novalidate th:action="@{/raise-bug}">
+                                
+                                <!-- Description -->
+                                <div class="mb-4">
+                                    <label for="description" class="form-label fw-bold">
+                                        <i class="fas fa-file-alt"></i> Description <span class="text-danger">*</span>
+                                    </label>
+                                    <textarea class="form-control form-control-lg" id="description" name="description" 
+                                              rows="5" placeholder="Describe the bug in detail..." required></textarea>
+                                    <small class="form-text text-muted">Provide a detailed description of the bug</small>
+                                </div>
+
+                                <!-- Priority -->
+                                <div class="mb-4">
+                                    <label for="priority" class="form-label fw-bold">
+                                        <i class="fas fa-exclamation-triangle"></i> Priority <span class="text-danger">*</span>
+                                    </label>
+                                    <select class="form-select form-select-lg" id="priority" name="priority" required>
+                                        <option value="" disabled selected>Select Priority Level</option>
+                                        <option value="HIGH">🔴 HIGH</option>
+                                        <option value="MEDIUM">🟡 MEDIUM</option>
+                                        <option value="LOW">🟢 LOW</option>
+                                    </select>
+                                </div>
+
+                                <!-- Severity -->
+                                <div class="mb-4">
+                                    <label for="severity" class="form-label fw-bold">
+                                        <i class="fas fa-radiation"></i> Severity <span class="text-danger">*</span>
+                                    </label>
+                                    <select class="form-select form-select-lg" id="severity" name="severity" required>
+                                        <option value="" disabled selected>Select Severity Level</option>
+                                        <option value="CRITICAL">⚡ CRITICAL</option>
+                                        <option value="MARGINAL">⚠️ MARGINAL</option>
+                                        <option value="NEGLIGIBLE">✓ NEGLIGIBLE</option>
+                                    </select>
+                                </div>
+
+                                <!-- Detected On -->
+                                <div class="mb-4">
+                                    <label for="detectedOn" class="form-label fw-bold">
+                                        <i class="fas fa-calendar"></i> Detected On <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="date" class="form-control form-control-lg" id="detectedOn" 
+                                           name="detectedOn" required th:value="${today}">
+                                </div>
+
+                                <!-- Assigned To -->
+                                <div class="mb-4">
+                                    <label for="assignedTo" class="form-label fw-bold">
+                                        <i class="fas fa-user"></i> Assigned To
+                                    </label>
+                                    <input type="text" class="form-control form-control-lg" id="assignedTo" 
+                                           name="assignedTo" placeholder="Enter assignee name (optional)">
+                                    <small class="form-text text-muted">Leave blank if not assigned yet</small>
+                                </div>
+
+                                <!-- Submit Button -->
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-primary btn-lg fw-bold">
+                                        <i class="fas fa-paper-plane"></i> Submit Bug Report
+                                    </button>
+                                    <a href="/bugs" class="btn btn-outline-secondary btn-lg" th:href="@{/bugs}">
+                                        <i class="fas fa-arrow-left"></i> Back to Bugs List
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Info Box -->
+                    <div class="alert alert-info mt-4" role="alert">
+                        <h5 class="alert-heading">
+                            <i class="fas fa-info-circle"></i> Important Information
+                        </h5>
+                        <ul class="mb-0">
+                            <li>All fields marked with <span class="text-danger">*</span> are required</li>
+                            <li>Be as specific as possible in your bug description</li>
+                            <li>Select appropriate priority and severity levels</li>
+                            <li>Your bug will be saved with status "OPEN"</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2025 Bug Tracker System. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Form validation
+        const bugForm = document.getElementById('bugForm');
+        bugForm.addEventListener('submit', function(event) {
+            if (!bugForm.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            bugForm.classList.add('was-validated');
+        });
+
+        // Set today's date as maximum date
+        document.getElementById('detectedOn').max = new Date().toISOString().split('T')[0];
+    </script>
+</body>
+</html>
