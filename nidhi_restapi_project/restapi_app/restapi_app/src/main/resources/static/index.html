@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Log Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏢 Visitor Log Management System</h1>
+            <p class="subtitle">Track and manage visitor check-ins and check-outs</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Check-in Form Section -->
+            <section class="card">
+                <h2>✅ Check-in Visitor</h2>
+                <form id="checkinForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="visitorName">Visitor Name *</label>
+                            <input type="text" id="visitorName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactNumber">Contact Number *</label>
+                            <input type="tel" id="contactNumber" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="visitorType">Visitor Type *</label>
+                            <select id="visitorType" required>
+                                <option value="">Select Type</option>
+                                <option value="GUEST">Guest</option>
+                                <option value="CONTRACTOR">Contractor</option>
+                                <option value="VENDOR">Vendor</option>
+                                <option value="INTERVIEW">Interview</option>
+                                <option value="DELIVERY">Delivery</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="hostName">Host Name *</label>
+                            <input type="text" id="hostName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="department">Department</label>
+                            <input type="text" id="department">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="purpose">Purpose of Visit *</label>
+                            <input type="text" id="purpose" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="idProofType">ID Proof Type</label>
+                            <select id="idProofType">
+                                <option value="">Select ID Type</option>
+                                <option value="Driving License">Driving License</option>
+                                <option value="Passport">Passport</option>
+                                <option value="Aadhar Card">Aadhar Card</option>
+                                <option value="PAN Card">PAN Card</option>
+                                <option value="Voter ID">Voter ID</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="idProofNumber">ID Proof Number</label>
+                            <input type="text" id="idProofNumber">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label for="remarks">Remarks</label>
+                            <textarea id="remarks" rows="2"></textarea>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Check-in Visitor</button>
+                </form>
+            </section>
+
+            <!-- Search and Filter Section -->
+            <section class="card">
+                <h2>🔍 Search Visitors</h2>
+                <div class="search-controls">
+                    <input type="text" id="searchName" placeholder="Search by name...">
+                    <button onclick="searchByName()" class="btn btn-secondary">Search</button>
+                    <button onclick="getCurrentVisitors()" class="btn btn-info">Currently Checked-in</button>
+                    <button onclick="getAllVisitors()" class="btn btn-success">All Visitors</button>
+                </div>
+            </section>
+
+            <!-- Visitors List Section -->
+            <section class="card">
+                <h2>📋 Visitor Records</h2>
+                <div id="visitorsList" class="visitors-list">
+                    <p class="no-data">Click "All Visitors" to load records</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
