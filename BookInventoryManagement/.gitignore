@@ -1,0 +1,27 @@
+# Maven / Java
+target/
+*.class
+*.log
+.classpath
+.project
+.settings/
+/.idea/
+*.iml
+/.mvn/
+/.springBeans
+
+# Eclipse
+.loadpath
+
+# IntelliJ
+out/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Maven wrapper
+/.mvn/wrapper/maven-wrapper.jar
+
+# m2e
+m2e-wtp/
