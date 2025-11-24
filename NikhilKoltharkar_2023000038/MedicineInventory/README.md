@@ -13,6 +13,7 @@ A full-stack web application for pharmacy inventory management with CRUD operati
 ### Prerequisites
 - Java JDK 8+ ([Download](https://adoptium.net/))
 - MySQL 8.0 ([Download](https://dev.mysql.com/downloads/mysql/))
+- Apache Maven 3.6+ ([Download](https://maven.apache.org/download.cgi))
 
 ### Step 1: Setup Database
 Run this in MySQL Workbench or command line:
@@ -28,22 +29,34 @@ private static final String USERNAME = "root";
 private static final String PASSWORD = "your_mysql_password";
 ```
 
-### Step 3: Compile & Run
+### Step 3: Build with Maven
+
+**Using Maven (Recommended):**
+```bash
+mvn clean compile
+```
+
+**OR Manual Compilation:**
+```bash
+# Windows
+javac -cp ".;lib/*" src/*.java
+
+# Mac/Linux
+javac -cp ".:lib/*" src/*.java
+```
+
+### Step 4: Run Application
 
 **Windows:**
 ```bash
-javac -cp ".;lib/*" src/*.java
 java -cp ".;lib/*;src" RestAPIServer
 ```
 
 **Mac/Linux:**
 ```bash
-javac -cp ".:lib/*" src/*.java
 java -cp ".:lib/*:src" RestAPIServer
 ```
-
-### Step 4: Access Application
-Open browser: **http://localhost:8081**
+Then Open browser: **http://localhost:8081**
 
 ---
 
